@@ -70,7 +70,7 @@ jobs:
        
     - name: artifact
       run:
-        mvn -B -f pom.xml clean package -DskipTests
+        mvn -B -f ./my-app/pom.xml clean package -DskipTests
        
     - name: Publish JAR artifact to Artifactory
       run: |
