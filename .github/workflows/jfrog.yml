@@ -43,7 +43,7 @@ jobs:
         JF_URL: https://jfrog.phvr.co.in
         JF_USER: admin
         JF_PASSWORD: Admin@123
-        JF_ACCESS_TOKEN: cmVmdGtuOjAxOjE3MTc3Nzc1MzQ6RHZEcHZVR1hPbDdtTGg2bTVWbEFaMUdtNFZy
+        JF_ACCESS_TOKEN: cmVmdGtuOjAxOjE3MTgzNzQ2Njg6V3VtWlBwVnhZb1VhWE5nY3R3S3h3dHFYNjVC
 
     
     # Basic authentication credentials
