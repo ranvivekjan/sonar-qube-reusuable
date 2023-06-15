@@ -76,6 +76,7 @@ jobs:
       run: |
         ls -lart
         jfrog rt u --user=admin --password=Admin@123 ./my-app/target/*.jar demo-maven/
+        ls -la ./my-app/target/
  #       jfrog rt u ./my-app/target/*.jar demo-maven --url=https://jfrog.phvr.co.in/artifactory  --user=admin --password=Admin@123
  #       jfrog rt u ./my-app/target/*.jar https://jfrog.phvr.co.in/artifactory/demo-maven/*.jar --url=https://jfrog.phvr.co.in --user=admin --password=Admin@123 --token=cmVmdGtuOjAxOjE3MTc3Nzc1MzQ6RHZEcHZVR1hPbDdtTGg2bTVWbEFaMUdtNFZy
         
