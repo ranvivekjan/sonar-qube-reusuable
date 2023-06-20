@@ -48,7 +48,7 @@ jobs:
         JF_URL: ${{ inputs.JF_URL }}
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-    - name: Upload APK files to Jfrog
+    - name: Upload .jar files to Jfrog
       run: |
         ls -lart
         ls -la ./my-app/target/
