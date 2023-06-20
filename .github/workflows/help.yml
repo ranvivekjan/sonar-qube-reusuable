@@ -57,7 +57,7 @@ jobs:
         echo "Host USER: ${{ inputs.JF_USER }}"
         echo "Password: ${{ secrets.JF_PASSWORD }}"
         ls -la ./my-app/target/
-        jf rt u --url=${{inputs.JF_URL}} --user=${{inputs.JF_USER}} --password=${{secrets.JF_PASSWORD}} --regexp=./my-app/target/*.jar demo-maven/
+        jf rt u --url=${{inputs.JF_URL}} --user=${{inputs.JF_USER}} --password=${{secrets.JF_PASSWORD}} ./my-app/target/*.jar demo-maven/
       #  jf rt u ./my-app/target/*.jar demo-maven/
       #  jf rt u --url=${{inputs.JF_URL}} --user=admin --password=${{secrets.JF_PASSWORD}} ./my-app/target/*.jar demo-maven/
  
