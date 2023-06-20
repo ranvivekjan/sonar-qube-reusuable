@@ -3,17 +3,21 @@ name: Jfrog-called
 on:
       
   workflow_call:
-    inputs:
-        JF_URL:
-          required: true
-          type: string
-        JF_USER:
-          required: true
-          type: string
+    #inputs:
+        #JF_URL:
+          #required: true
+          #type: string
+        #JF_USER:
+          #required: true
+          #type: string
     secrets:
         JF_PASSWORD:
           required: true
         JF_ACCESS_TOKEN:
+          required: true
+        JF_USER:
+          required: true
+        JF_URL:
           required: true
           
 jobs:
@@ -45,19 +49,19 @@ jobs:
       with:
         version: latest
       env:  
-        JF_URL: ${{ inputs.JF_URL }}
-        JF_USER: ${{ inputs.JF_USER }}
+        JF_URL: ${{ secrets.JF_URL }}
+        JF_USER: ${{ secrets.JF_USER }}
         JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
     - name: Upload .jar files to Jfrog
       run: |
         echo "Secret Token: ${{ secrets.JF_ACCESS_TOKEN }}"
-        echo "Host URL: ${{ inputs.JF_URL }}"
-        echo "Host USER: ${{ inputs.JF_USER }}"
+        echo "Host URL: ${{ secrets.JF_URL }}"
+        echo "Host USER: ${{ secrets.JF_USER }}"
         echo "Password: ${{ secrets.JF_PASSWORD }}"
         ls -la ./my-app/target/
-        jf rt u  "./my-app/target/*.jar" demo-maven/ --url=${{inputs.JF_URL}} --user=${{inputs.JF_USER}} --password=${{secrets.JF_PASSWORD}}
+        jf rt u  "./my-app/target/*.jar" demo-maven/ --url=${{secrets.JF_URL}} --user=${{secrets.JF_USER}} --password=${{secrets.JF_PASSWORD}}
       #  jf rt u --url=${{inputs.JF_URL}} --user=${{inputs.JF_USER}} ./my-app/target/*.jar demo-maven/
       #  jf rt u ./my-app/target/*.jar demo-maven/
       #  jf rt u --url=${{inputs.JF_URL}} --user=admin --password=${{secrets.JF_PASSWORD}} ./my-app/target/*.jar demo-maven/
