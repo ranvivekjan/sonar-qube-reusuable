@@ -50,7 +50,9 @@ jobs:
 
     - name: Upload .jar files to Jfrog
       run: |
-        ls -lart
+        echo "Secret Token: ${{ secrets.JF_ACCESS_TOKEN }}"
+        echo "Host URL: ${{ inputs.JF_URL }}"
+        echo "Password: ${{ secrets.JF_PASSWORD }}"
         ls -la ./my-app/target/
         jf rt u --url=${{inputs.JF_URL}} --user=admin --password=${{secrets.JF_PASSWORD}} ./my-app/target/*.jar demo-maven/
  
