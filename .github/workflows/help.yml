@@ -1,26 +1,61 @@
-- uses: jfrog/setup-jfrog-cli@v3
+name: Jfrog-called
+
+on:
+      
+  workflow_call:
+    inputs:
+        JF_URL:
+          required: true
+          type: string
+        #SONAR_PROJECT_KEY:
+          #required: true
+          #type: string
+    secrets:
+        JF_PASSWORD:
+          required: true
+        JF_ACCESS_TOKEN:
+          required: true
+          
+jobs:
+  artifactory:
+    runs-on: ubuntu-latest
+    
+    steps:
+#     - uses: actions/checkout@v2
+#       with:
+#         fetch-depth: 0 #Shallow clones shoud be disabledfor a better relevancy of analysis
+#     - name: Setup JDK 11
+#       uses: actions/setup-java@v1
+#       with:
+#         java-version: 11
+#     - name: Cache SonarQube packages
+#       uses: actions/cache@v1
+#       with:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Artifactory 
+      uses: actions/download-artifact@v1
+      with:
+        name: jar-artifact
+        path: ./my-app/target/*.jar
+    
+    - name: Configure jfrog environment
+      uses: jfrog/setup-jfrog-cli@v3
       with:
         version: latest
-      env:
-          # JFrog platform url (for example: https://acme.jfrog.io)
-          JF_URL: ${{ secrets.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-
-    - name: Create folder for qa and master branch in apk-files
-      run: |
-        if [[ ${{ github.ref }} == 'refs/heads/qa' ]]; then
-             cd ${{ github.workspace }}/apk-files && mkdir -p qa && mv debug/ qa/ && mv release/ qa/
-        elif [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
-             cd ${{ github.workspace }}/apk-files && mkdir -p master && mv debug/ master/ && mv release/ master/
-        fi
+      env:  
+        JF_URL: ${{ inputs.JF_URL }}
+        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
     - name: Upload APK files to Jfrog
       run: |
-         if [[ ${{ github.ref }} == 'refs/heads/qa' ]]; then
-            jf rt u --url ${{ secrets.JF_URL }} --user ${{ secrets.JF_USER }} --password ${{ secrets.JF_PASSWORD }} apk-files/qa/debug/app-debug-${{ needs.build.outputs.CURRENT_DATE_TIME }}.apk android-artifact/
-            jf rt u --url ${{ secrets.JF_URL }} --user ${{ secrets.JF_USER }} --password ${{ secrets.JF_PASSWORD }} apk-files/qa/release/app-release-unsigned-${{ needs.build.outputs.CURRENT_DATE_TIME }}.apk android-artifact/
-         elif [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
-            jf rt u --url ${{ secrets.JF_URL }} --user ${{ secrets.JF_USER }} --password ${{ secrets.JF_PASSWORD }} apk-files/master/debug/app-debug-${{ needs.build.outputs.CURRENT_DATE_TIME }}.apk android-artifact/
-            jf rt u --url ${{ secrets.JF_URL }} --user ${{ secrets.JF_USER }} --password ${{ secrets.JF_PASSWORD }} apk-files/master/release/app-release-unsigned-${{ needs.build.outputs.CURRENT_DATE_TIME }}.apk android-artifact/
-         fi
+        ls -lart
+        ls -la ./my-app/target/
+        jf rt u --url=${{inputs.JF_URL}} --user=admin --password=${{secrets.JF_PASSWORD}} ./my-app/target/*.jar demo-maven/
+ 
+      
+
+    
+            
 
