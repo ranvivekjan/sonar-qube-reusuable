@@ -38,7 +38,7 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: jar-artifact
-        path: ./my-app/target/*.jar
+        path: my-app/target/
     
     - name: Configure jfrog environment
       uses: jfrog/setup-jfrog-cli@v3
