@@ -37,7 +37,7 @@ jobs:
     - name: Artifactory 
       uses: actions/download-artifact@v1
       with:
-        name: jar-artifact
+        #name: jar-artifact
         path: ./my-app/target/*.jar
     
     - name: Configure jfrog environment
