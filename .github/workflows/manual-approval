@@ -1,0 +1,10 @@
+name: testing-approval
+on:
+  workflow_dispatch:
+
+jobs:
+ test-approval:
+    name: Manual approval
+    runs-on: ubuntu-latest
+    environment:
+      name: test
