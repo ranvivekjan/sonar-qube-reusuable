@@ -1,6 +1,6 @@
 name: testing-approval
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
  test-approval:
