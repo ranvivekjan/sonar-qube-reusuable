@@ -8,3 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: test
+
+    steps:
+    - name: Printing
+      run: |
+        echo "Manual Approval test"
